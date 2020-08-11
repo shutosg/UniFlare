@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace UniFlare
 {
-    public class UniFlareMultiIris : UniFlareElementBase, IUniFlareElement
+    public class UniFlareMultiIris<T, U> : UniFlareElementBase where T : UniFlareIris<U> where U : UniFlareElementBase
     {
         private const float SpreadUnit = 100f;
         [SerializeField] private float _spreadDistance = DistanceMagnification;
@@ -16,7 +16,7 @@ namespace UniFlare
         [SerializeField] private float _spreadScale = 0.75f * SpreadUnit;
         [SerializeField] private int _randomSeedScale = 100000;
         [SerializeField] private Sprite _sprite;
-        [SerializeField] private UniFlareIris[] _irises;
+        [SerializeField] private T[] _irises;
 
         private bool _initialized;
 
@@ -50,7 +50,7 @@ namespace UniFlare
             foreach (var iris in _irises)
             {
                 iris.InitializeColor(_color);
-                iris.InitializeSprite(_sprite);
+                iris.InitializeRenderer(_sprite);
             }
 
             _initialized = true;

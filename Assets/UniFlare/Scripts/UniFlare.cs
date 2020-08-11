@@ -32,6 +32,7 @@ namespace UniFlare
                 element.UpdatePosition(_position.position, _center.position);
                 element.UpdateIntensity(_intensity);
                 element.UpdateScale(_scale);
+                element.UpdateColor(_color);
             }
         }
 

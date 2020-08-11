@@ -21,6 +21,8 @@ namespace UniFlare
             }
         }
 
+        public void InitializeSprite(Sprite sprite) => _sprite.sprite = sprite;
+
         public override void UpdateIntensity(float intensity)
         {
             // throw new NotImplementedException();

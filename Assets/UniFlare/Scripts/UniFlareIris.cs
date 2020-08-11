@@ -5,19 +5,23 @@ using UnityEngine;
 
 namespace UniFlare
 {
-    public class UniFlareIris : UniFlareSpriteElement
+    [RequireComponent(typeof(UniFlareElementBase))]
+    public abstract class UniFlareIris<T> : MonoBehaviour, IUniFlareElement where T : UniFlareElementBase
     {
-        public void Initialize(float distance, float intensity, Vector3 scale)
-        {
-            _distance = distance;
-            _intensity = intensity;
-            _scale = scale;
-        }
+        protected T _element => _elementCache != null ? _elementCache : _elementCache = GetComponent<T>();
+        private T _elementCache;
+        public void InitializeDistance(float distance) => _element.InitializeDistance(distance);
+        public void InitializeIntensity(float intensity) => _element.InitializeIntensity(intensity);
+        public void InitializeScale(Vector3 scale) => _element.InitializeScale(scale);
+        public void InitializeColor(Color color) => _element.InitializeColor(color);
 
-        public void InitializeDistance(float distance) => _distance = distance;
-        public void InitializeIntensity(float intensity) => _intensity = intensity;
-        public void InitializeScale(Vector3 scale) => _scale = scale;
-        public void InitializeColor(Color color) => _color = color;
-        public void InitializeSprite(Sprite sprite) => _sprite.sprite = sprite;
+        public abstract void InitializeRenderer(Sprite sprite);
+        public void UpdatePosition(Vector3 position, Vector3 center) => _element.UpdatePosition(position, center);
+
+        public void UpdateIntensity(float intensity) => _element.UpdateIntensity(intensity);
+
+        public void UpdateScale(Vector3 scale) => _element.UpdateScale(scale);
+
+        public void UpdateColor(Color color) => _element.UpdateColor(color);
     }
 }

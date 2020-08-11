@@ -14,6 +14,11 @@ namespace UniFlare
         [SerializeField] protected Vector3 _scale = Vector3.one;
         [SerializeField] protected Color _color = Color.white;
 
+        public void InitializeDistance(float distance) => _distance = distance;
+        public void InitializeIntensity(float intensity) => _intensity = intensity;
+        public void InitializeScale(Vector3 scale) => _scale = scale;
+        public void InitializeColor(Color color) => _color = color;
+
         public virtual void UpdatePosition(Vector3 position, Vector3 center)
         {
             transform.localPosition = Vector3.LerpUnclamped(position, center, _distance / DistanceMagnification);

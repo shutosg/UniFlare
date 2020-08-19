@@ -62,6 +62,12 @@
         "com.unity.modules.ui": "1.0.0"
       }
     },
+    "net.shutosg.uniflare": {
+      "version": "file:net.shutosg.uniflare",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

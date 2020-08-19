@@ -1,0 +1,17 @@
+{
+    "name": "UniFlare.Editor",
+    "references": [
+        "GUID:ebfcdfddb89814ad397b9cacf4ba791c"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

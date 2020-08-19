@@ -1,0 +1,15 @@
+{
+  "name": "net.shutosg.uniflare",
+  "version": "0.0.0",
+  "displayName": "UniFlare",
+  "description": "Flare effect for Unity.",
+  "keywords": [
+    "Flare"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "shutosg",
+    "url": "https://shutosg.net"
+  },
+  "type": "library"
+}

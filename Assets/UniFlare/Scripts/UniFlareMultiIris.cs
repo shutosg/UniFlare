@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 namespace UniFlare
@@ -20,9 +19,12 @@ namespace UniFlare
 
         private bool _initialized;
 
-        private void initializeIfNeeded()
+        public override Object[] GetRecordObjects() =>
+            base.GetRecordObjects().Concat(_irises.SelectMany(i => i.GetRecordObjects())).ToArray();
+
+        public override void Initialize()
         {
-            if (_initialized) return;
+            base.Initialize();
             Random.InitState(_randomSeedDistance);
             _spreadDistance = Mathf.Max(0, _spreadDistance);
             foreach (var iris in _irises)
@@ -51,8 +53,32 @@ namespace UniFlare
             {
                 iris.InitializeColor(_color);
                 iris.InitializeRenderer(_sprite);
+                iris.Initialize();
             }
+        }
 
+        public override void SetMaterialIfNeeded(Material material)
+        {
+            base.SetMaterialIfNeeded(material);
+            foreach (var iris in _irises)
+            {
+                iris.SetMaterialIfNeeded(_material);
+            }
+        }
+
+        public override void ShiftColorHue(float hueOffset)
+        {
+            base.ShiftColorHue(hueOffset);
+            foreach (var iris in _irises)
+            {
+                iris.ShiftColorHue(hueOffset);
+            }
+        }
+
+        private void initializeIfNeeded()
+        {
+            if (_initialized) return;
+            Initialize();
             _initialized = true;
         }
 
@@ -68,13 +94,14 @@ namespace UniFlare
         public override void UpdateIntensity(float intensity)
         {
             initializeIfNeeded();
+            var masterIntensity = _intensity / 100;
             foreach (var iris in _irises)
             {
-                iris.UpdateIntensity(intensity);
+                iris.UpdateIntensity(intensity * masterIntensity);
             }
         }
 
-        public override void UpdateScale(Vector3 scale)
+        public override void UpdateScale(float scale)
         {
             initializeIfNeeded();
             foreach (var iris in _irises)
@@ -86,10 +113,16 @@ namespace UniFlare
         public override void UpdateColor(Color color)
         {
             initializeIfNeeded();
+            color = CalculateColor(color);
             foreach (var iris in _irises)
             {
                 iris.UpdateColor(color);
             }
+        }
+
+        private void OnValidate()
+        {
+            Initialize();
         }
     }
 }

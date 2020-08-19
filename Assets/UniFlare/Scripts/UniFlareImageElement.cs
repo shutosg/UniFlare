@@ -1,24 +1,33 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace UniFlare
 {
-    [RequireComponent(typeof(Image))]
+    [RequireComponent(typeof(UniFlareImage))]
     public class UniFlareImageElement : UniFlareElementBase
     {
-        private Image _cachedImage;
-        protected Image _image => _cachedImage != null ? _cachedImage : _cachedImage = GetComponent<Image>();
+        private UniFlareImage _cachedImage;
+        protected UniFlareImage Image => _cachedImage != null ? _cachedImage : _cachedImage = GetComponent<UniFlareImage>();
 
-        public void InitializeSprite(Sprite sprite) => _image.sprite = sprite;
+        public override Object[] GetRecordObjects() => base.GetRecordObjects().Concat(new[] { (Object)Image }).ToArray();
+
+        public void InitializeSprite(Sprite sprite) => Image.sprite = sprite;
+
+        public override void SetMaterialIfNeeded(Material material)
+        {
+            base.SetMaterialIfNeeded(material);
+            if (Image.material != _material) Image.material = _material;
+        }
 
         public override void UpdateIntensity(float intensity)
         {
-            // throw new NotImplementedException();
+            var val = intensity * (_intensity / 100f);
+            Image.Intensity = val;
         }
 
         public override void UpdateColor(Color color)
         {
-            _image.color = color * _color;
+            Image.color = CalculateColor(color);
         }
     }
 }

@@ -13,12 +13,12 @@ jobs:
         fetch-depth: 0
     - name: split upm branch
       run: |
-	git branch -d upm &> /dev/null || echo upm branch not found
+        git branch -d upm &> /dev/null || echo upm branch not found
         git subtree split -P "$PKG_ROOT" -b upm
-	if [[ -d "PackageResources" ]]; then
-	  cd "PackageResources"
-	fi
-	if [[ -d "Samples" ]]; then
+        if [[ -d "PackageResources" ]]; then
+          cd "PackageResources"
+        fi
+        if [[ -d "Samples" ]]; then
           git mv Samples Samples~
           rm -f Samples.meta
           git config --global user.name 'github-bot'

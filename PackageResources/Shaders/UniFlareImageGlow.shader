@@ -1,6 +1,6 @@
 ﻿// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "UniFlare/Image/Additive"
+Shader "UniFlare/Image/Glow"
 {
     Properties
     {
@@ -88,7 +88,7 @@ Shader "UniFlare/Image/Additive"
                 fixed4 color : COLOR;
                 float2 texcoord : TEXCOORD0;
                 float4 worldPosition : TEXCOORD1;
-                float2 flareParam : TEXCOORD2;
+                float2 flareParam : TEXCOORD2; // x: Intensity, y: Size
                 UNITY_VERTEX_OUTPUT_STEREO
             };
 

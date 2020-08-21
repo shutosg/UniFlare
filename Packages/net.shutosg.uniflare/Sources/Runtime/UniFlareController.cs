@@ -13,6 +13,8 @@ namespace UniFlare
         [SerializeField] private float _intensity = 100f;
         [SerializeField] private float _scale = 100f;
         [SerializeField] private Color _color = Color.white;
+        [Range(0, 30)] [SerializeField] private float _flickerAmount;
+        [Range(0, 20)] [SerializeField] private float _flickerSpeed;
         [SerializeField] private UniFlareElementBase[] elements;
         private readonly List<IUniFlareElement> _elements = new List<IUniFlareElement>();
 
@@ -42,10 +44,12 @@ namespace UniFlare
         public void UpdateFlare()
         {
             if (_elements.Count == 0) ResetElementList();
+            // flick intensity
+            var noise = 2 * (0.5f - Mathf.PerlinNoise(Time.time * _flickerSpeed, 0)) * _flickerAmount;
             foreach (var element in _elements)
             {
                 element.UpdatePosition(_position.localPosition, _center.localPosition);
-                element.UpdateIntensity(_intensity / 100);
+                element.UpdateIntensity((_intensity + noise) / 100);
                 element.UpdateScale(_scale / 100);
                 element.UpdateColor(_color);
             }

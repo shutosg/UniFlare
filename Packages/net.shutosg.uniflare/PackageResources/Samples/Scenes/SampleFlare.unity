@@ -3292,6 +3292,8 @@ MonoBehaviour:
   _intensity: 100
   _scale: 100
   _color: {r: 1, g: 1, b: 1, a: 1}
+  _flickerAmount: 7.4
+  _flickerSpeed: 7.4
   elements:
   - {fileID: 2106282939}
   - {fileID: 1481356591}
@@ -5024,6 +5026,8 @@ MonoBehaviour:
   _intensity: 100
   _scale: 100
   _color: {r: 0.3013194, g: 0.16509432, b: 1, a: 1}
+  _flickerAmount: 0
+  _flickerSpeed: 0
   elements:
   - {fileID: 1326885677}
   - {fileID: 265934407}

@@ -1,6 +1,6 @@
 ﻿// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "UniFlare/Image/Glow"
+Shader "UniFlare/UI/Glow"
 {
     Properties
     {

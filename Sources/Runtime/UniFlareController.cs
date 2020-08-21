@@ -26,6 +26,11 @@ namespace UniFlare
             .Concat(new[] { (UEObject)this })
             .ToArray();
 
+        private void Start()
+        {
+            Initialize();
+        }
+
         public void Initialize()
         {
             ResetElementList();
@@ -43,7 +48,7 @@ namespace UniFlare
 
         public void UpdateFlare()
         {
-            if (_elements.Count == 0) ResetElementList();
+            if (_elements.Count == 0) return;
             // flick intensity
             var noise = 2 * (0.5f - Mathf.PerlinNoise(Time.time * _flickerSpeed, 0)) * _flickerAmount;
             foreach (var element in _elements)

@@ -1,34 +1,36 @@
-﻿using UnityEngine;
-using UnityEditor;
-using UniFlare;
+﻿using UnityEditor;
+using UnityEngine;
 
-[CustomEditor(typeof(UniFlareController))]
-public class UniFlareControllerEditor : Editor
+namespace UniFlare.Editor
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(UniFlareController))]
+    public class UniFlareControllerEditor : UnityEditor.Editor
     {
-        base.OnInspectorGUI();
-        var t = target as UniFlareController;
-        if (t == null) return;
-
-        EditorGUILayout.Space();
-        if (GUILayout.Button("Force Initialize"))
+        public override void OnInspectorGUI()
         {
-            Undo.RegisterCompleteObjectUndo(t.GetRecordObjects(), "Force Initialize Flare");
-            t.Initialize();
-        }
+            base.OnInspectorGUI();
+            var t = target as UniFlareController;
+            if (t == null) return;
 
-        if (GUILayout.Button("Add Hue 0.1"))
-        {
-            foreach (var recordObject in t.GetRecordObjects())
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Force Initialize"))
             {
-                var so = new SerializedObject(recordObject);
-                var color = so.FindProperty("_color")?.colorValue;
-                if (color == null) continue;
-                so.FindProperty("_color").colorValue = color.Value.OffsetHue(0.1f);
-                so.ApplyModifiedProperties();
+                Undo.RegisterCompleteObjectUndo(t.GetRecordObjects(), "Force Initialize Flare");
+                t.Initialize();
             }
+
+            if (GUILayout.Button("Add Hue 0.1"))
+            {
+                foreach (var recordObject in t.GetRecordObjects())
+                {
+                    var so = new SerializedObject(recordObject);
+                    var color = so.FindProperty("_color")?.colorValue;
+                    if (color == null) continue;
+                    so.FindProperty("_color").colorValue = color.Value.OffsetHue(0.1f);
+                    so.ApplyModifiedProperties();
+                }
+            }
+            EditorApplication.QueuePlayerLoopUpdate();
         }
-        EditorApplication.QueuePlayerLoopUpdate();
     }
 }

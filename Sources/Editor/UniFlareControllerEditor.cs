@@ -14,14 +14,20 @@ public class UniFlareControllerEditor : Editor
         EditorGUILayout.Space();
         if (GUILayout.Button("Force Initialize"))
         {
-            t.Initialize();
             Undo.RegisterCompleteObjectUndo(t.GetRecordObjects(), "Force Initialize Flare");
+            t.Initialize();
         }
 
         if (GUILayout.Button("Add Hue 0.1"))
         {
-            Undo.RegisterCompleteObjectUndo(t.GetRecordObjects(), "Shift Flare Hue");
-            t.ShiftColorHue(0.1f);
+            foreach (var recordObject in t.GetRecordObjects())
+            {
+                var so = new SerializedObject(recordObject);
+                var color = so.FindProperty("_color")?.colorValue;
+                if (color == null) continue;
+                so.FindProperty("_color").colorValue = color.Value.OffsetHue(0.1f);
+                so.ApplyModifiedProperties();
+            }
         }
         EditorApplication.QueuePlayerLoopUpdate();
     }

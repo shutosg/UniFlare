@@ -1,6 +1,6 @@
 ﻿// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
 
-Shader "UniFlare/UI/Glow"
+Shader "UniFlare/UI/Default"
 {
     Properties
     {
@@ -118,10 +118,7 @@ Shader "UniFlare/UI/Glow"
             fixed4 frag(v2f IN) : SV_Target
             {
                 half4 color = IN.color;
-                float dist = distance(IN.texcoord, float2(0.5, 0.5)) * 2.0;
-                dist += (sign(dist) * (1.0 - _Size));
-                float distanceAlpha = 0.1 / pow(dist, IN.flareParam.y) * IN.flareParam.x;
-                color *= distanceAlpha;
+                color *= (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.flareParam.x;
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);

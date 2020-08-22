@@ -3,7 +3,7 @@
 namespace UniFlare
 {
 
-    public static class ColorExtension
+    public static class UniFlareColorExtension
     {
         public static Color OffsetHue(this Color self, float hueOffset)
         {

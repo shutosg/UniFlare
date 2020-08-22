@@ -9,11 +9,14 @@ namespace UniFlare
         private T _elementCache;
 
         public Object[] GetRecordObjects() => _element.GetRecordObjects();
+
         public void Initialize() { }
         public void InitializeDistance(float distance) => _element.InitializeDistance(distance);
         public void InitializeIntensity(float intensity) => _element.InitializeIntensity(intensity);
         public void InitializeScale(Vector3 scale) => _element.InitializeScale(scale);
         public void InitializeColor(Color color) => _element.InitializeColor(color);
+        public void InitializeTransition(Vector3 transition) => _element.InitializeTransition(transition);
+        public void InitializePositionOffset(Vector3 positionOffset) => _element.InitializePositionOffset(positionOffset);
         public void SetMaterialIfNeeded(Material material) => _element.SetMaterialIfNeeded(material);
 
         public abstract void InitializeRenderer(Sprite sprite);

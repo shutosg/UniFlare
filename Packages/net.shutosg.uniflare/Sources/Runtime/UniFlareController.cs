@@ -57,6 +57,7 @@ namespace UniFlare
                 element.UpdateIntensity((_intensity + noise) / 100);
                 element.UpdateScale(_scale / 100);
                 element.UpdateColor(_color);
+                element.UpdateOtherParams();
             }
         }
 

@@ -9,6 +9,7 @@ namespace UniFlare
         void UpdateIntensity(float intensity);
         void UpdateScale(float scale);
         void UpdateColor(Color color);
+        void UpdateOtherParams();
         void ShiftColorHue(float hueOffset);
     }
 }

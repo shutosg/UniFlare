@@ -63,6 +63,7 @@ namespace UniFlare
         public virtual void ShiftColorHue(float hueOffset) => _color = _color.OffsetHue(hueOffset);
 
         public abstract void UpdateColor(Color color);
+        public virtual void UpdateOtherParams() { }
 
         protected Color CalculateColor(Color color)
         {

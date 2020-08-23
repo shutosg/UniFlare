@@ -22,7 +22,7 @@ namespace UniFlare
         public override void UpdateIntensity(float intensity)
         {
             var val = intensity * (_intensity / 100f);
-            Image.Intensity = val;
+            Image.FlareParam0 = val;
         }
 
         public override void UpdateColor(Color color)

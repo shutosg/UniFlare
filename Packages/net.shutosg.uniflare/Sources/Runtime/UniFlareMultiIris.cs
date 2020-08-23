@@ -151,6 +151,14 @@ namespace UniFlare
             }
         }
 
+        public override void UpdateOtherParams()
+        {
+            foreach (var iris in _irises)
+            {
+                iris.UpdateOtherParams();
+            }
+        }
+
         private void OnValidate()
         {
             Initialize();

@@ -27,6 +27,9 @@ namespace UniFlare
         public void UpdateScale(float scale) => _element.UpdateScale(scale);
 
         public void UpdateColor(Color color) => _element.UpdateColor(color);
+
+        public void UpdateOtherParams() => _element.UpdateOtherParams();
+
         public void ShiftColorHue(float hueOffset) => _element.ShiftColorHue(hueOffset);
     }
 }

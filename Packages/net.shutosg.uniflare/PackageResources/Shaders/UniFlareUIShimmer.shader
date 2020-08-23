@@ -6,6 +6,7 @@ Shader "UniFlare/UI/Shimmer"
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
+        _AnimationSpeed ("Animation Speed", FLoat) = 0
 
         [Header(Blending Factor)]
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcFactor("Src Factor", Float) = 5 // SrcAlpha
@@ -75,12 +76,18 @@ Shader "UniFlare/UI/Shimmer"
             fixed4 _TextureSampleAdd;
             fixed _CutoffAlpha;
             float4 _ClipRect;
+            float _AnimationSpeed;
 
             #define PI 3.14159265358979
 
             float rand(float n, float seed)
             {
                 return frac(sin(n + seed) * 100000.);
+            }
+
+            float rand2d(float2 p, float seed)
+            {
+                return frac(sin(dot(p, float2(100., 700.0)) + seed) * 1000.);
             }
 
             float noise1d(float p, float seed)
@@ -90,12 +97,25 @@ Shader "UniFlare/UI/Shimmer"
                 return lerp(rand(i, seed), rand(i + 1.0, seed), smoothstep(0.0, 1.0, f));
             }
 
+            float noise2d(float2 p, float seed)
+            {
+                float2 i = floor(p);
+                float2 f = smoothstep(0, 1, frac(p));
+                float rand00 = rand2d(i + float2(0.0, 0.0), seed);
+                float rand10 = rand2d(i + float2(1.0, 0.0), seed);
+                float rand01 = rand2d(i + float2(0.0, 1.0), seed);
+                float rand11 = rand2d(i + float2(1.0, 1.0), seed);
+                float noise0 = lerp(rand00, rand10, f.x);
+                float noise1 = lerp(rand01, rand11, f.x);
+                return lerp(noise0, noise1, f.y);
+            }
+
             fixed4 frag(v2f IN) : SV_Target
             {
                 half4 color = IN.color;
                 float2 pos = IN.texcoord * 2.0 - 1.0;
                 float angle = atan2(pos.y, pos.x) / PI * 0.5 + 0.5;
-            	float noise = noise1d(angle * 50.0 * IN.flareParam.y, 0);
+            	float noise = noise2d(float2(angle * 50.0 * IN.flareParam.y, _Time.z * _AnimationSpeed), 0);
                 color *= noise - pow(length(pos), 0.5);
                 color *= IN.flareParam.x;
 

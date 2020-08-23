@@ -16,8 +16,8 @@ namespace UniFlare
         [SerializeField] private int _randomSeedScale = 100000;
         [SerializeField] private Vector3 _spreadPositionOffset = Vector3.zero * SpreadUnit;
         [SerializeField] private int _randomSeedPositionOffset = 100000;
-        [SerializeField] private Sprite _sprite;
-        [SerializeField] private T[] _irises;
+        [SerializeField] private Sprite _sprite = default;
+        [SerializeField] private T[] _irises = default;
 
         private bool _initialized;
 

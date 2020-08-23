@@ -8,14 +8,14 @@ namespace UniFlare
     [ExecuteAlways]
     public class UniFlareController : MonoBehaviour
     {
-        [SerializeField] private Transform _position;
-        [SerializeField] private Transform _center;
+        [SerializeField] private Transform _position = default;
+        [SerializeField] private Transform _center = default;
         [SerializeField] private float _intensity = 100f;
         [SerializeField] private float _scale = 100f;
         [SerializeField] private Color _color = Color.white;
-        [Range(0, 30)] [SerializeField] private float _flickerAmount;
-        [Range(0, 20)] [SerializeField] private float _flickerSpeed;
-        [SerializeField] private UniFlareElementBase[] elements;
+        [Range(0, 30)] [SerializeField] private float _flickerAmount = default;
+        [Range(0, 20)] [SerializeField] private float _flickerSpeed = default;
+        [SerializeField] private UniFlareElementBase[] elements = default;
         private readonly List<IUniFlareElement> _elements = new List<IUniFlareElement>();
 
         public UEObject[] GetTransforms() =>

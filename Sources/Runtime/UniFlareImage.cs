@@ -5,24 +5,57 @@ using UnityEngine.UI;
 public class UniFlareImage : Image
 {
     private List<UIVertex> _stream = new List<UIVertex>();
-    public float Intensity
+
+    public float FlareParam0
     {
         set
         {
-            _intensity = value;
+            setParam(value, 0);
             SetVerticesDirty();
         }
     }
-    private float _intensity;
-    public float Size
+    public float FlareParam1
     {
         set
         {
-            _size = value;
+            setParam(value, 1);
             SetVerticesDirty();
         }
     }
-    private float _size;
+    public float FlareParam2
+    {
+        set
+        {
+            setParam(value, 2);
+            SetVerticesDirty();
+        }
+    }
+    public float FlareParam3
+    {
+        set
+        {
+            setParam(value, 3);
+            SetVerticesDirty();
+        }
+    }
+
+    void setParam(float v, int index)
+    {
+        var uv2 = _texCoord2;
+        // TODO: 精度落として4パラメータ詰め込む
+        switch (index)
+        {
+            case 0:
+                uv2.x = v;
+                break;
+            case 1:
+                uv2.y = v;
+                break;
+        }
+        _texCoord2 = uv2;
+    }
+
+    private Vector2 _texCoord2;
 
     protected void AddCustomShaderChannel()
     {
@@ -51,8 +84,7 @@ public class UniFlareImage : Image
         for (var i = 0; i < _stream.Count; ++i)
         {
             var vert = _stream[i];
-            vert.uv2.x = _intensity;
-            vert.uv2.y = _size;
+            vert.uv2 = _texCoord2;
             _stream[i] = vert;
         }
 

@@ -8,7 +8,12 @@ namespace UniFlare
 
         private void OnValidate()
         {
-            Image.Size = _size / 50;
+            UpdateOtherParams();
+        }
+
+        public override void UpdateOtherParams()
+        {
+            Image.FlareParam1 = _size / 50;
         }
     }
 }

@@ -11,5 +11,12 @@
     "name": "shutosg",
     "url": "https://shutosg.net"
   },
-  "type": "library"
+  "type": "library",
+  "samples": [
+    {
+      "displayName": "Sample Files",
+      "description": "Sample Scene & Material & Texture",
+      "path": "Samples~/UniFlareSample"
+    }
+  ]
 }

@@ -67,64 +67,27 @@ Shader "UniFlare/UI/Shimmer"
 
             #include "UnityCG.cginc"
             #include "UnityUI.cginc"
+            #include "UniFlareUI.cginc"
 
             #pragma multi_compile __ UNITY_UI_CLIP_RECT
             #pragma multi_compile __ UNITY_UI_ALPHACLIP
 
-            struct appdata_t
-            {
-                float4 vertex : POSITION;
-                float4 color : COLOR;
-                float2 texcoord : TEXCOORD0;
-                float2 uv : TEXCOORD2;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-            };
-
-            struct v2f
-            {
-                float4 vertex : SV_POSITION;
-                fixed4 color : COLOR;
-                float2 texcoord : TEXCOORD0;
-                float4 worldPosition : TEXCOORD1;
-                float2 flareParam : TEXCOORD2; // x: Intensity, y: Size
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            sampler2D _MainTex;
-            fixed4 _Color;
             fixed4 _TextureSampleAdd;
             fixed _CutoffAlpha;
             float4 _ClipRect;
-            float4 _MainTex_ST;
 
             #define PI 3.14159265358979
 
-            float rand(float n)
+            float rand(float n, float seed)
             {
-                return frac(sin(n) * 100000.);
+                return frac(sin(n + seed) * 100000.);
             }
 
-            float noise1d(float p)
+            float noise1d(float p, float seed)
             {
                 float i = floor(p); // integer
                 float f = frac(p); // fraction
-                return lerp(rand(i), rand(i + 1.0), smoothstep(0.0,1.0, f));
-            }
-
-            v2f vert(appdata_t v)
-            {
-                v2f OUT;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-                OUT.worldPosition = v.vertex;
-                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
-
-                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-
-                OUT.color = v.color * _Color;
-
-                OUT.flareParam = v.uv;
-                return OUT;
+                return lerp(rand(i, seed), rand(i + 1.0, seed), smoothstep(0.0, 1.0, f));
             }
 
             fixed4 frag(v2f IN) : SV_Target
@@ -132,7 +95,7 @@ Shader "UniFlare/UI/Shimmer"
                 half4 color = IN.color;
                 float2 pos = IN.texcoord * 2.0 - 1.0;
                 float angle = atan2(pos.y, pos.x) / PI * 0.5 + 0.5;
-            	float noise = noise1d(angle * 50.0 * IN.flareParam.y);
+            	float noise = noise1d(angle * 50.0 * IN.flareParam.y, 0);
                 color *= noise - pow(length(pos), 0.5);
                 color *= IN.flareParam.x;
 

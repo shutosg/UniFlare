@@ -68,52 +68,15 @@ Shader "UniFlare/UI/Glow"
 
             #include "UnityCG.cginc"
             #include "UnityUI.cginc"
+            #include "UniFlareUI.cginc"
 
             #pragma multi_compile __ UNITY_UI_CLIP_RECT
             #pragma multi_compile __ UNITY_UI_ALPHACLIP
 
-            struct appdata_t
-            {
-                float4 vertex : POSITION;
-                float4 color : COLOR;
-                float2 texcoord : TEXCOORD0;
-                float2 uv : TEXCOORD2;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-            };
-
-            struct v2f
-            {
-                float4 vertex : SV_POSITION;
-                fixed4 color : COLOR;
-                float2 texcoord : TEXCOORD0;
-                float4 worldPosition : TEXCOORD1;
-                float2 flareParam : TEXCOORD2; // x: Intensity, y: Size
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            sampler2D _MainTex;
-            fixed4 _Color;
             fixed4 _TextureSampleAdd;
             fixed _CutoffAlpha;
             float4 _ClipRect;
-            float4 _MainTex_ST;
             float _Size;
-
-            v2f vert(appdata_t v)
-            {
-                v2f OUT;
-                UNITY_SETUP_INSTANCE_ID(v);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
-                OUT.worldPosition = v.vertex;
-                OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
-
-                OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
-
-                OUT.color = v.color * _Color;
-
-                OUT.flareParam = v.uv;
-                return OUT;
-            }
 
             fixed4 frag(v2f IN) : SV_Target
             {

@@ -61,6 +61,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - PixelSnap: 0
+    - _AnimationSpeed: 0.25
     - _BumpScale: 1
     - _ColorMask: 15
     - _Cutoff: 0.5

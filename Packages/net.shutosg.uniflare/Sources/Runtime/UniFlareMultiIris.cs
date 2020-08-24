@@ -86,6 +86,9 @@ namespace UniFlare
                 iris.InitializeTransition(_transition);
                 iris.Initialize();
             }
+
+            // reset random seed
+            Random.InitState(System.Environment.TickCount);
         }
 
         public override void SetMaterialIfNeeded(Material material)

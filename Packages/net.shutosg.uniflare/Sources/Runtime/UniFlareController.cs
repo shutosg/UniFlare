@@ -61,8 +61,11 @@ namespace UniFlare
             }
         }
 
-        public void ShiftColorHue(float hueOffset)
+        public void SetColorHue(float targetHue)
         {
+            var currentHue = _color.ToHSV().x;
+            var hueOffset = targetHue - currentHue;
+            // Debug.Log($"targetHue: {targetHue}, currentHue: {currentHue}, offset: {hueOffset}");
             _color = _color.OffsetHue(hueOffset);
             foreach (var element in _elements)
             {

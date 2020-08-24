@@ -21,6 +21,11 @@ namespace UniFlare
         }
 
         public static Color ToRGB(this Vector3 hsv)
-            => Color.HSVToRGB(hsv.x, hsv.y, hsv.z);
+        {
+            hsv.x = (hsv.x % 1 + 1) % 1;
+            hsv.y = Mathf.Clamp01(hsv.y);
+            hsv.z = Mathf.Clamp01(hsv.z);
+            return Color.HSVToRGB(hsv.x, hsv.y, hsv.z);
+        }
     }
 }

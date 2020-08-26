@@ -3,30 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UniFlare;
+using UnityEngine.EventSystems;
 
 public class SampleScene : MonoBehaviour
 {
-    [SerializeField] private Button _yellow = default;
-    [SerializeField] private Button _red = default;
-    [SerializeField] private Button _green = default;
+    [SerializeField] private Canvas _canvas = default;
     [SerializeField] private UniFlareController[] _flares = default;
-    [SerializeField] private Dropdown _selector = default;
+    [SerializeField] private Slider _intensitySlider = default;
+    [SerializeField] private Slider _scaleSlider = default;
+    [SerializeField] private Slider _hueSlider = default;
+    private List<float> _originalHues = new List<float>();
 
     void Start()
     {
         foreach (var flare in _flares)
         {
-            _selector.options.Add(new Dropdown.OptionData(flare.gameObject.name));
+            _originalHues.Add(flare.Color.ToHSV().x);
         }
-        _yellow.onClick.AddListener(() => ChangeColor(Color.yellow));
-        _red.onClick.AddListener(() => ChangeColor(Color.red));
-        _green.onClick.AddListener(() => ChangeColor(Color.green));
+        _intensitySlider.onValueChanged.AddListener(v =>
+        {
+            foreach (var flare in _flares)
+            {
+                flare.Intensity = v * 2 * 100f;
+            }
+        });
+        _scaleSlider.onValueChanged.AddListener(v =>
+        {
+            foreach (var flare in _flares)
+            {
+                flare.Scale = v * 2 * 100f;
+            }
+        });
+        _hueSlider.onValueChanged.AddListener(v =>
+        {
+            for (var i = 0; i < _flares.Length; i++)
+            {
+                _flares[i].SetColorHue(_originalHues[i] + (v - 0.5f));
+            }
+        });
     }
 
-    // Update is called once per frame
-    private void ChangeColor(Color color)
+    public void OnDragPosition(int flareIndex)
     {
-        // Debug.Log($"{color}, {color.ToHSV()}");
-        _flares[_selector.value].SetColorHue(color.ToHSV().x);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.transform as RectTransform, Input.mousePosition, _canvas.worldCamera, out var localPoint);
+        _flares[flareIndex].Position.localPosition = localPoint;
+    }
+
+    public void OnDragCenter(int flareIndex)
+    {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvas.transform as RectTransform, Input.mousePosition, _canvas.worldCamera, out var localPoint);
+        _flares[flareIndex].Center.localPosition = localPoint;
     }
 }

@@ -18,6 +18,24 @@ namespace UniFlare
         [SerializeField] private UniFlareElementBase[] elements = default;
         private readonly List<IUniFlareElement> _elements = new List<IUniFlareElement>();
 
+        public Transform Position => _position;
+        public Transform Center => _center;
+        public float Intensity
+        {
+            get => _intensity;
+            set => _intensity = value;
+        }
+        public float Scale
+        {
+            get => _scale;
+            set => _scale = value;
+        }
+        public Color Color
+        {
+            get => _color;
+            set => _color = value;
+        }
+
         private void Start()
         {
             Initialize();
@@ -43,7 +61,7 @@ namespace UniFlare
             }
         }
 
-        public void UpdateFlare()
+        private void UpdateFlare()
         {
             if (_elements.Count == 0) return;
             // flick intensity

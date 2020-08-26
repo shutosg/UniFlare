@@ -8,8 +8,6 @@ namespace UniFlare
         protected T _element => _elementCache != null ? _elementCache : _elementCache = GetComponent<T>();
         private T _elementCache;
 
-        public Object[] GetRecordObjects() => _element.GetRecordObjects();
-
         public void Initialize() { }
         public void InitializeDistance(float distance) => _element.InitializeDistance(distance);
         public void InitializeIntensity(float intensity) => _element.InitializeIntensity(intensity);
@@ -31,5 +29,9 @@ namespace UniFlare
         public void UpdateOtherParams() => _element.UpdateOtherParams();
 
         public void ShiftColorHue(float hueOffset) => _element.ShiftColorHue(hueOffset);
+
+#if UNITY_EDITOR
+        public Object[] GetRecordObjects() => _element.GetRecordObjects();
+#endif
     }
 }

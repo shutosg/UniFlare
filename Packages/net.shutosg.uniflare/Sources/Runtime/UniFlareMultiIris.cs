@@ -21,9 +21,6 @@ namespace UniFlare
 
         private bool _initialized;
 
-        public override Object[] GetRecordObjects() =>
-            base.GetRecordObjects().Concat(_irises.SelectMany(i => i.GetRecordObjects())).ToArray();
-
         // TODO: 初期値をいい感じにセットするメソッドをclassごとに用意
         // public void Reset()
         // {
@@ -109,7 +106,7 @@ namespace UniFlare
             }
         }
 
-        private void initializeIfNeeded()
+        private void InitializeIfNeeded()
         {
             if (_initialized) return;
             Initialize();
@@ -118,7 +115,7 @@ namespace UniFlare
 
         public override void UpdatePosition(Vector3 position, Vector3 center)
         {
-            initializeIfNeeded();
+            InitializeIfNeeded();
             foreach (var iris in _irises)
             {
                 iris.UpdatePosition(position, center);
@@ -127,7 +124,7 @@ namespace UniFlare
 
         public override void UpdateIntensity(float intensity)
         {
-            initializeIfNeeded();
+            InitializeIfNeeded();
             var masterIntensity = _intensity / 100;
             foreach (var iris in _irises)
             {
@@ -137,7 +134,7 @@ namespace UniFlare
 
         public override void UpdateScale(float scale)
         {
-            initializeIfNeeded();
+            InitializeIfNeeded();
             foreach (var iris in _irises)
             {
                 iris.UpdateScale(scale);
@@ -146,7 +143,7 @@ namespace UniFlare
 
         public override void UpdateColor(Color color)
         {
-            initializeIfNeeded();
+            InitializeIfNeeded();
             color = CalculateColor(color);
             foreach (var iris in _irises)
             {
@@ -162,9 +159,14 @@ namespace UniFlare
             }
         }
 
+#if UNITY_EDITOR
+        public override Object[] GetRecordObjects() =>
+            base.GetRecordObjects().Concat(_irises.SelectMany(i => i.GetRecordObjects())).ToArray();
+
         private void OnValidate()
         {
             Initialize();
         }
+#endif
     }
 }

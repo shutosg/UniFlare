@@ -6,14 +6,16 @@ namespace UniFlare
     {
         [SerializeField] private float _size = 100f;
 
-        private void OnValidate()
-        {
-            UpdateOtherParams();
-        }
-
         public override void UpdateOtherParams()
         {
             Image.FlareParam1 = _size / 50;
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            UpdateOtherParams();
+        }
+#endif
     }
 }

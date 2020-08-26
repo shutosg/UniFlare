@@ -62,12 +62,6 @@ public class UniFlareImage : Image
         if (canvas != null) canvas.additionalShaderChannels |= AdditionalCanvasShaderChannels.TexCoord2;
     }
 
-    new void OnValidate()
-    {
-        AddCustomShaderChannel();
-        SetVerticesDirty();
-    }
-
     new void Start()
     {
         AddCustomShaderChannel();
@@ -90,4 +84,13 @@ public class UniFlareImage : Image
 
         vh.AddUIVertexTriangleStream(_stream);
     }
+
+#if UNITY_EDITOR
+    protected override void OnValidate()
+    {
+        base.OnValidate();
+        AddCustomShaderChannel();
+        SetVerticesDirty();
+    }
+#endif
 }

@@ -15,8 +15,6 @@ namespace UniFlare
         [SerializeField] protected Color _color = Color.white;
         [SerializeField] protected Material _material;
 
-        public virtual Object[] GetRecordObjects() => new[] { (Object)this };
-
         public virtual void SetMaterialIfNeeded(Material material)
         {
             if (_material != material) _material = material;
@@ -74,5 +72,9 @@ namespace UniFlare
             }
             return _color;
         }
+
+#if UNITY_EDITOR
+        public virtual UnityEngine.Object[] GetRecordObjects() => new[] { (UnityEngine.Object)this };
+#endif
     }
 }

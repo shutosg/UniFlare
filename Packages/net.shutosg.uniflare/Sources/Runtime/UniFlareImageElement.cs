@@ -9,8 +9,6 @@ namespace UniFlare
         private UniFlareImage _cachedImage;
         protected UniFlareImage Image => _cachedImage != null ? _cachedImage : _cachedImage = GetComponent<UniFlareImage>();
 
-        public override Object[] GetRecordObjects() => base.GetRecordObjects().Concat(new[] { (Object)Image }).ToArray();
-
         public void InitializeSprite(Sprite sprite) => Image.sprite = sprite;
 
         public override void SetMaterialIfNeeded(Material material)
@@ -29,5 +27,9 @@ namespace UniFlare
         {
             Image.color = CalculateColor(color);
         }
+
+#if UNITY_EDITOR
+        public override Object[] GetRecordObjects() => base.GetRecordObjects().Append(Image).ToArray();
+#endif
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UEObject = UnityEngine.Object;
 
 namespace UniFlare
 {
@@ -19,17 +18,14 @@ namespace UniFlare
         [SerializeField] private UniFlareElementBase[] elements = default;
         private readonly List<IUniFlareElement> _elements = new List<IUniFlareElement>();
 
-        public UEObject[] GetTransforms() =>
-            elements.Select(e => (UEObject)e.transform).ToArray();
-
-        public UEObject[] GetRecordObjects() => elements
-            .SelectMany(e => e.GetRecordObjects())
-            .Concat(new[] { (UEObject)this })
-            .ToArray();
-
         private void Start()
         {
             Initialize();
+        }
+
+        private void Update()
+        {
+            UpdateFlare();
         }
 
         public void Initialize()
@@ -74,9 +70,14 @@ namespace UniFlare
             }
         }
 
-        private void Update()
-        {
-            UpdateFlare();
-        }
+#if UNITY_EDITOR
+        public Object[] GetTransforms() =>
+            elements.Select(e => (Object)e.transform).ToArray();
+
+        public Object[] GetRecordObjects() => elements
+            .SelectMany(e => e.GetRecordObjects())
+            .Append(this)
+            .ToArray();
+#endif
     }
 }

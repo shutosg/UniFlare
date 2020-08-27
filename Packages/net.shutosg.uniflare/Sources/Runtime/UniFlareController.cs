@@ -23,17 +23,32 @@ namespace UniFlare
         public float Intensity
         {
             get => _intensity;
-            set => _intensity = value;
+            set => _intensity = Mathf.Max(0, value);
         }
         public float Scale
         {
             get => _scale;
-            set => _scale = value;
+            set => _scale = Mathf.Max(0, value);
         }
         public Color Color
         {
             get => _color;
             set => _color = value;
+        }
+        public float FlickerAmount
+        {
+            get => _flickerAmount;
+            set => _flickerAmount = Mathf.Max(0, value);
+        }
+        public float FlickerSpeed
+        {
+            get => _flickerSpeed;
+            set => _flickerSpeed = Mathf.Max(0, value);
+        }
+        public float FlickerTimeOffset
+        {
+            get => _flickerTimeOffset;
+            set => _flickerTimeOffset = value;
         }
 
         private void Start()

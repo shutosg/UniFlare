@@ -18,7 +18,7 @@ namespace shutosg.UniFlare.Elements
         [SerializeField] protected float _distance = Percentage;
         [SerializeField] protected Vector3 _positionOffset = Vector3.zero;
         [SerializeField] protected Vector3 _transition = Vector2.one * Percentage;
-        [SerializeField] protected int _intensity = IntensityMagnification;
+        [Range(0, 1000)] [SerializeField] protected int _intensity = IntensityMagnification;
         [SerializeField] protected Vector3 _scale = Vector3.one;
         [SerializeField] protected bool _useGlobalColor = true;
         [SerializeField] protected Color _color = Color.white;

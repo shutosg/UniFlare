@@ -83,7 +83,8 @@ Shader "UniFlare/UI/Glow"
                 half4 color = IN.color;
                 float dist = distance(IN.texcoord, float2(0.5, 0.5)) * 2.0;
                 dist += (sign(dist) * (1.0 - _Size));
-                float distanceAlpha = 0.1 / pow(dist, IN.flareParam.y) * IN.flareParam.x;
+                half size = IN.flareParam.y / 100;
+                float distanceAlpha = 0.1 / pow(dist, size * 2.0) * IN.flareParam.x;
                 color *= distanceAlpha;
 
                 #ifdef UNITY_UI_CLIP_RECT

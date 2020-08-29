@@ -12,7 +12,7 @@ namespace shutosg.UniFlare
     {
         [SerializeField] private Transform _position = default;
         [SerializeField] private Transform _center = default;
-        [SerializeField] private int _intensity = 100;
+        [Range(0, 1000)] [SerializeField] private int _intensity = 100;
         [SerializeField] private float _scale = 100f;
         [SerializeField] private Color _color = Color.white;
         [Range(0, 100)] [SerializeField] private float _flickerAmount = default;

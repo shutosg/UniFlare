@@ -7,6 +7,7 @@ Shader "UniFlare/UI/Shimmer"
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
         _AnimationSpeed ("Animation Speed", FLoat) = 0
+        [PowerSlider(3.0)] _Sharpness ("Sharpness", Range(0.01, 4.0)) = 1
 
         [Header(Blending Factor)]
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcFactor("Src Factor", Float) = 5 // SrcAlpha
@@ -77,6 +78,7 @@ Shader "UniFlare/UI/Shimmer"
             fixed _CutoffAlpha;
             float4 _ClipRect;
             float _AnimationSpeed;
+            float _Sharpness;
 
             #define PI 3.14159265358979
 
@@ -116,7 +118,7 @@ Shader "UniFlare/UI/Shimmer"
                 float2 pos = IN.texcoord * 2.0 - 1.0;
                 float angle = atan2(pos.y, pos.x) / PI * 0.5 + 0.5;
             	float noise = noise2d(float2(angle * 50.0 * IN.flareParam.y, _Time.z * _AnimationSpeed), 0);
-                color *= noise - pow(length(pos), 0.5);
+                color *= pow(noise, _Sharpness) - pow(length(pos), 0.5);
                 color *= IN.flareParam.x;
 
                 #ifdef UNITY_UI_CLIP_RECT

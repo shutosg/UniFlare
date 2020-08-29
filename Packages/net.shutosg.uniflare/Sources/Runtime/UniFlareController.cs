@@ -85,7 +85,11 @@ namespace shutosg.UniFlare
         {
             if (_elements.Count == 0) return;
             // flick intensity
-            var noise = 2 * (0.5f - Mathf.PerlinNoise((Time.time + _flickerTimeOffset) * _flickerSpeed, 0)) * _flickerAmount;
+#if UNITY_EDITOR
+            // update params for changing on inspector
+            SetFlickerValuesFromInspector();
+#endif
+            var noise = _flicker.Value;
             foreach (var element in _elements)
             {
                 element.UpdatePosition(_position.localPosition, _center.localPosition);

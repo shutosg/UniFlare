@@ -4,11 +4,11 @@ namespace shutosg.UniFlare.Elements.UI
 {
     public class UniFlareGlowImage : UniFlareImageElement
     {
-        [SerializeField] private float _size = 100f;
+        [SerializeField] private int _size = 100;
 
         public override void UpdateOtherParams()
         {
-            Image.FlareParam1 = _size / 50;
+            Image.SetParam(_size, 1);
         }
 
 #if UNITY_EDITOR

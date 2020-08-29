@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using shutosg.UniFlare.Tools;
 
 namespace shutosg.UniFlare.Elements.UI
 {
@@ -19,8 +20,10 @@ namespace shutosg.UniFlare.Elements.UI
 
         public override void UpdateIntensity(float intensity)
         {
-            var val = intensity * (_intensity / 100f);
-            Image.FlareParam0 = val;
+            const int Precision = 0xFFFF;
+            const float Epsilon = 0.0001f;
+            var normalized = UniFlareValueNormalizer.NormalizeLog(intensity * _intensity, Epsilon, -14, 14, 0, Precision);
+            Image.SetParam(normalized, 0);
         }
 
         public override void UpdateColor(Color color)

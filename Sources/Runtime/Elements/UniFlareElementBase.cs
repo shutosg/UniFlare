@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using shutosg.UniFlare.Extensions;
+using UnityEngine;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Elements
 {
     public abstract class UniFlareElementBase : MonoBehaviour, IUniFlareElement
     {

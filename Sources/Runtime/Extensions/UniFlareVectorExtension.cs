@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Extensions
 {
     public static class UniFlareVectorExtension
     {

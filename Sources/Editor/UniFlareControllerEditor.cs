@@ -1,7 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using shutosg.UniFlare.Extensions;
 
-namespace UniFlare.Editor
+namespace shutosg.UniFlare.Editor
 {
     [CustomEditor(typeof(UniFlareController))]
     public class UniFlareControllerEditor : UnityEditor.Editor

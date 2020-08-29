@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Elements.UI
 {
     public class UniFlareGlowImage : UniFlareImageElement
     {

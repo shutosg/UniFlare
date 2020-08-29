@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Elements.UI
 {
     [RequireComponent(typeof(UniFlareImage))]
     public class UniFlareImageElement : UniFlareElementBase

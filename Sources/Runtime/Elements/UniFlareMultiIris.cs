@@ -1,9 +1,8 @@
 ﻿using System.Linq;
+using shutosg.UniFlare.Extensions;
 using UnityEngine;
-using Object = UnityEngine.Object;
-using Random = UnityEngine.Random;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Elements
 {
     public class UniFlareMultiIris<T, U> : UniFlareElementBase where T : UniFlareIris<U> where U : UniFlareElementBase
     {

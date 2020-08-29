@@ -1,12 +1,20 @@
 ﻿using shutosg.UniFlare.Extensions;
+using shutosg.UniFlare.Tools;
 using UnityEngine;
 
 namespace shutosg.UniFlare.Elements
 {
+    [ExecuteAlways]
     public abstract class UniFlareElementBase : MonoBehaviour, IUniFlareElement
     {
         protected const float Percentage = 100f;
         protected const float IntensityMagnification = 100f;
+        [Header("for Self Update")]
+        [SerializeField] private bool _selfUpdate = default;
+        [Range(0, 100)] [SerializeField] private float _flickerAmount = default;
+        [Range(0, 20)] [SerializeField] private float _flickerSpeed = default;
+        [SerializeField] private float _flickerTimeOffset = default;
+        [Header("General Params")]
         [SerializeField] protected float _distance = Percentage;
         [SerializeField] protected Vector3 _positionOffset = Vector3.zero;
         [SerializeField] protected Vector3 _transition = Vector2.one * Percentage;
@@ -15,6 +23,25 @@ namespace shutosg.UniFlare.Elements
         [SerializeField] protected bool _useGlobalColor = true;
         [SerializeField] protected Color _color = Color.white;
         [SerializeField] protected Material _material;
+        private UniFlareValueFlicker _flicker;
+        private UniFlareValueFlicker Flicker => _flicker ?? (_flicker = new UniFlareValueFlicker());
+        private bool _selfInitialized;
+
+        public float FlickerAmount
+        {
+            get => Flicker.Max;
+            set => Flicker.Max = Mathf.Max(0, value);
+        }
+        public float FlickerSpeed
+        {
+            get => Flicker.Speed;
+            set => Flicker.Speed = Mathf.Max(0, value);
+        }
+        public float FlickerTimeOffset
+        {
+            get => Flicker.TimeOffset;
+            set => Flicker.TimeOffset = value;
+        }
 
         public virtual void SetMaterialIfNeeded(Material material)
         {
@@ -36,6 +63,7 @@ namespace shutosg.UniFlare.Elements
         public virtual void Initialize()
         {
             SetMaterialIfNeeded(_material);
+            if (_selfUpdate) SetFlickerValuesFromFields();
         }
 
         /// <summary>
@@ -74,8 +102,39 @@ namespace shutosg.UniFlare.Elements
             return _color;
         }
 
+        private void Update()
+        {
+            if (!_selfUpdate) return;
+            if (!_selfInitialized)
+            {
+                Initialize();
+                _selfInitialized = true;
+            }
 #if UNITY_EDITOR
-        public virtual UnityEngine.Object[] GetRecordObjects() => new[] { (UnityEngine.Object)this };
+            // update params for changing on inspector
+            SetFlickerValuesFromFields();
+#endif
+            var localPosition = transform.localPosition;
+            UpdatePosition(localPosition, localPosition);
+            UpdateIntensity((_intensity + Flicker.Value) / 100);
+            UpdateScale(1f);
+            UpdateColor(Color.white);
+            UpdateOtherParams();
+        }
+
+        private void SetFlickerValuesFromFields()
+        {
+            FlickerAmount = _flickerAmount;
+            FlickerSpeed = _flickerSpeed;
+            FlickerTimeOffset = _flickerTimeOffset;
+        }
+
+#if UNITY_EDITOR
+        public virtual Object[] GetRecordObjects() => new[] { (Object)this };
+        private void OnValidate()
+        {
+            SetFlickerValuesFromFields();
+        }
 #endif
     }
 }

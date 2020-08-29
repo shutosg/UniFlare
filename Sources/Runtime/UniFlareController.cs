@@ -12,19 +12,19 @@ namespace shutosg.UniFlare
     {
         [SerializeField] private Transform _position = default;
         [SerializeField] private Transform _center = default;
-        [SerializeField] private float _intensity = 100f;
+        [SerializeField] private int _intensity = 100;
         [SerializeField] private float _scale = 100f;
         [SerializeField] private Color _color = Color.white;
-        [Range(0, 30)] [SerializeField] private float _flickerAmount = default;
+        [Range(0, 100)] [SerializeField] private float _flickerAmount = default;
         [Range(0, 20)] [SerializeField] private float _flickerSpeed = default;
-        [SerializeField] private float _flickerTimeOffset = default;
+        [Range(-100, 100)] [SerializeField] private float _flickerTimeOffset = default;
         [SerializeField] private UniFlareElementBase[] elements = default;
         private readonly List<IUniFlareElement> _elements = new List<IUniFlareElement>();
         private readonly UniFlareValueFlicker _flicker = new UniFlareValueFlicker();
 
         public Transform Position => _position;
         public Transform Center => _center;
-        public float Intensity
+        public int Intensity
         {
             get => _intensity;
             set => _intensity = Mathf.Max(0, value);
@@ -93,7 +93,7 @@ namespace shutosg.UniFlare
             foreach (var element in _elements)
             {
                 element.UpdatePosition(_position.localPosition, _center.localPosition);
-                element.UpdateIntensity((_intensity + noise) / 100);
+                element.UpdateIntensity((_intensity + noise) / 100f);
                 element.UpdateScale(_scale / 100);
                 element.UpdateColor(_color);
                 element.UpdateOtherParams();

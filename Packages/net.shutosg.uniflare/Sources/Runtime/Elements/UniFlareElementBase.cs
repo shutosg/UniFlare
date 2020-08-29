@@ -8,7 +8,7 @@ namespace shutosg.UniFlare.Elements
     public abstract class UniFlareElementBase : MonoBehaviour, IUniFlareElement
     {
         protected const float Percentage = 100f;
-        protected const float IntensityMagnification = 100f;
+        protected const int IntensityMagnification = 100;
         [Header("for Self Update")]
         [SerializeField] private bool _selfUpdate = default;
         [Range(0, 100)] [SerializeField] private float _flickerAmount = default;
@@ -18,7 +18,7 @@ namespace shutosg.UniFlare.Elements
         [SerializeField] protected float _distance = Percentage;
         [SerializeField] protected Vector3 _positionOffset = Vector3.zero;
         [SerializeField] protected Vector3 _transition = Vector2.one * Percentage;
-        [SerializeField] protected float _intensity = IntensityMagnification;
+        [SerializeField] protected int _intensity = IntensityMagnification;
         [SerializeField] protected Vector3 _scale = Vector3.one;
         [SerializeField] protected bool _useGlobalColor = true;
         [SerializeField] protected Color _color = Color.white;
@@ -49,7 +49,7 @@ namespace shutosg.UniFlare.Elements
         }
 
         public void InitializeDistance(float distance) => _distance = distance;
-        public void InitializeIntensity(float intensity) => _intensity = intensity;
+        public void InitializeIntensity(int intensity) => _intensity = intensity;
         public void InitializeScale(Vector3 scale) => _scale = scale;
         public void InitializeTransition(Vector3 transition) => _transition = transition;
         public void InitializePositionOffset(Vector3 positionOffset) => _positionOffset = positionOffset;

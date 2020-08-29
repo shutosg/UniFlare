@@ -6,10 +6,10 @@ namespace shutosg.UniFlare.Elements
 {
     public class UniFlareMultiIris<T, U> : UniFlareElementBase where T : UniFlareIris<U> where U : UniFlareElementBase
     {
-        private const float SpreadUnit = 100f;
+        private const int SpreadUnit = 100;
         [SerializeField] private float _spreadDistance = 0.75f * SpreadUnit;
         [SerializeField] private int _randomSeedDistance = 100000;
-        [SerializeField] private float _spreadIntensity = 0.75f * SpreadUnit;
+        [SerializeField] private int _spreadIntensity = (int)(0.75f * SpreadUnit);
         [SerializeField] private int _randomSeedIntensity = 100000;
         [SerializeField] private float _spreadScale = 0.75f * SpreadUnit;
         [SerializeField] private int _randomSeedScale = 100000;
@@ -46,10 +46,10 @@ namespace shutosg.UniFlare.Elements
 
             // intensity
             Random.InitState(_randomSeedIntensity);
-            _spreadIntensity = Mathf.Clamp(_spreadIntensity, 0f, SpreadUnit);
+            _spreadIntensity = Mathf.Clamp(_spreadIntensity, 0, SpreadUnit);
             foreach (var iris in _irises)
             {
-                var intensity = Random.Range(_intensity * (SpreadUnit - _spreadIntensity) / SpreadUnit, _intensity);
+                var intensity = (int)Random.Range((float)_intensity * (SpreadUnit - _spreadIntensity) / SpreadUnit, _intensity);
                 iris.InitializeIntensity(intensity);
             }
 
@@ -124,7 +124,7 @@ namespace shutosg.UniFlare.Elements
         public override void UpdateIntensity(float intensity)
         {
             InitializeIfNeeded();
-            var masterIntensity = _intensity / 100;
+            var masterIntensity = _intensity / 100f;
             foreach (var iris in _irises)
             {
                 iris.UpdateIntensity(intensity * masterIntensity);

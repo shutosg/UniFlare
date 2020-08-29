@@ -10,7 +10,7 @@ namespace shutosg.UniFlare.Elements
 
         public void Initialize() { }
         public void InitializeDistance(float distance) => _element.InitializeDistance(distance);
-        public void InitializeIntensity(float intensity) => _element.InitializeIntensity(intensity);
+        public void InitializeIntensity(int intensity) => _element.InitializeIntensity(intensity);
         public void InitializeScale(Vector3 scale) => _element.InitializeScale(scale);
         public void InitializeColor(Color color) => _element.InitializeColor(color);
         public void InitializeTransition(Vector3 transition) => _element.InitializeTransition(transition);

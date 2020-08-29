@@ -23,7 +23,7 @@ public class SampleScene : MonoBehaviour
         {
             foreach (var flare in _flares)
             {
-                flare.Intensity = v * 2 * 100f;
+                flare.Intensity = (int)(v * 2 * 100f);
             }
         });
         _scaleSlider.onValueChanged.AddListener(v =>

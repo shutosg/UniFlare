@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UniFlare.Tools;
 
 namespace UniFlare
 {
@@ -17,6 +18,7 @@ namespace UniFlare
         [SerializeField] private float _flickerTimeOffset = default;
         [SerializeField] private UniFlareElementBase[] elements = default;
         private readonly List<IUniFlareElement> _elements = new List<IUniFlareElement>();
+        private readonly ValueFlicker _flicker = new ValueFlicker();
 
         public Transform Position => _position;
         public Transform Center => _center;
@@ -37,18 +39,18 @@ namespace UniFlare
         }
         public float FlickerAmount
         {
-            get => _flickerAmount;
-            set => _flickerAmount = Mathf.Max(0, value);
+            get => _flicker.Max;
+            set => _flicker.Max = Mathf.Max(0, value);
         }
         public float FlickerSpeed
         {
-            get => _flickerSpeed;
-            set => _flickerSpeed = Mathf.Max(0, value);
+            get => _flicker.Speed;
+            set => _flicker.Speed = Mathf.Max(0, value);
         }
         public float FlickerTimeOffset
         {
-            get => _flickerTimeOffset;
-            set => _flickerTimeOffset = value;
+            get => _flicker.TimeOffset;
+            set => _flicker.TimeOffset = value;
         }
 
         private void Start()
@@ -63,6 +65,7 @@ namespace UniFlare
 
         public void Initialize()
         {
+            SetFlickerValuesFromInspector();
             ResetElementList();
             _elements.ForEach(e => e.Initialize());
         }
@@ -103,6 +106,13 @@ namespace UniFlare
             }
         }
 
+        private void SetFlickerValuesFromInspector()
+        {
+            FlickerAmount = _flickerAmount;
+            FlickerSpeed = _flickerSpeed;
+            FlickerTimeOffset = _flickerTimeOffset;
+        }
+
 #if UNITY_EDITOR
         public Object[] GetTransforms() =>
             elements.Select(e => (Object)e.transform).ToArray();
@@ -111,6 +121,11 @@ namespace UniFlare
             .SelectMany(e => e.GetRecordObjects())
             .Append(this)
             .ToArray();
+
+        private void OnValidate()
+        {
+            SetFlickerValuesFromInspector();
+        }
 #endif
     }
 }

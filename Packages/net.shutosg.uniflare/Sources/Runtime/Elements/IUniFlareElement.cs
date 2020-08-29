@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Elements
 {
     public interface IUniFlareElement
     {

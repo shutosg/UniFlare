@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UniFlare.Tools;
+using shutosg.UniFlare.Elements;
+using shutosg.UniFlare.Extensions;
+using shutosg.UniFlare.Tools;
 
-namespace UniFlare
+namespace shutosg.UniFlare
 {
     [ExecuteAlways]
     public class UniFlareController : MonoBehaviour
@@ -18,7 +20,7 @@ namespace UniFlare
         [SerializeField] private float _flickerTimeOffset = default;
         [SerializeField] private UniFlareElementBase[] elements = default;
         private readonly List<IUniFlareElement> _elements = new List<IUniFlareElement>();
-        private readonly ValueFlicker _flicker = new ValueFlicker();
+        private readonly UniFlareValueFlicker _flicker = new UniFlareValueFlicker();
 
         public Transform Position => _position;
         public Transform Center => _center;

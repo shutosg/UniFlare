@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UniFlare;
-using UnityEngine.EventSystems;
+using shutosg.UniFlare;
+using shutosg.UniFlare.Extensions;
 
 public class SampleScene : MonoBehaviour
 {

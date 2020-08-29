@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Elements
 {
     [RequireComponent(typeof(UniFlareElementBase))]
     public abstract class UniFlareIris<T> : MonoBehaviour, IUniFlareElement where T : UniFlareElementBase

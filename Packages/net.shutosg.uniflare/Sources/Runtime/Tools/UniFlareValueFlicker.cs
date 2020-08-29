@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace UniFlare.Tools
+namespace shutosg.UniFlare.Tools
 {
-    public class ValueFlicker
+    public class UniFlareValueFlicker
     {
         public float Value
         {
@@ -21,7 +21,7 @@ namespace UniFlare.Tools
         private float _time = default;
         private float _value = default;
 
-        public ValueFlicker(float timeOffset = 0, float speed = 1, float min = 0, float max = 1)
+        public UniFlareValueFlicker(float timeOffset = 0, float speed = 1, float min = 0, float max = 1)
         {
             TimeOffset = timeOffset;
             Speed = speed;

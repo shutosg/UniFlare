@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UniFlare
+namespace shutosg.UniFlare.Elements.Sprites
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class UniFlareSpriteElement : UniFlareElementBase

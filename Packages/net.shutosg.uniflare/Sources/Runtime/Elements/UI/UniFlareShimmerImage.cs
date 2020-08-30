@@ -14,7 +14,7 @@ namespace shutosg.UniFlare.Elements.UI
         public override void UpdateOtherParams()
         {
             Image.SetParam(_complexity, 1);
-            var normalized = UniFlareValueNormalizer.NormalizeLog(_sharpness, 0, -7, 2, 0, UniFlareImage.ParamPrecision);
+            var normalized = UniFlareValueNormalizer.NormalizeLog(_sharpness, 0, -7, 3, 0, UniFlareImage.ParamPrecision);
             Image.SetParam(normalized, 2);
             Image.SetParam((int)(_animationSpeed * AnimationSpeedMultiplier + 0.5f), 3);
         }

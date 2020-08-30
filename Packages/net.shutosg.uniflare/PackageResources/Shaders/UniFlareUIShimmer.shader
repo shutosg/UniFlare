@@ -68,6 +68,7 @@ Shader "UniFlare/UI/Shimmer"
             #include "UnityCG.cginc"
             #include "UnityUI.cginc"
             #include "UniFlareUI.cginc"
+            #include "noise2D.cginc"
 
             #pragma multi_compile __ UNITY_UI_CLIP_RECT
             #pragma multi_compile __ UNITY_UI_ALPHACLIP
@@ -78,44 +79,15 @@ Shader "UniFlare/UI/Shimmer"
 
             #define PI 3.14159265358979
 
-            float rand(float n, float seed)
-            {
-                return frac(sin(n + seed) * 100000.);
-            }
-
-            float rand2d(float2 p, float seed)
-            {
-                return frac(sin(dot(p, float2(100., 700.0)) + seed) * 1000.);
-            }
-
-            float noise1d(float p, float seed)
-            {
-                float i = floor(p); // integer
-                float f = frac(p); // fraction
-                return lerp(rand(i, seed), rand(i + 1.0, seed), smoothstep(0.0, 1.0, f));
-            }
-
-            float noise2d(float2 p, float seed)
-            {
-                float2 i = floor(p);
-                float2 f = smoothstep(0, 1, frac(p));
-                float rand00 = rand2d(i + float2(0.0, 0.0), seed);
-                float rand10 = rand2d(i + float2(1.0, 0.0), seed);
-                float rand01 = rand2d(i + float2(0.0, 1.0), seed);
-                float rand11 = rand2d(i + float2(1.0, 1.0), seed);
-                float noise0 = lerp(rand00, rand10, f.x);
-                float noise1 = lerp(rand01, rand11, f.x);
-                return lerp(noise0, noise1, f.y);
-            }
-
             fixed4 frag(v2f IN) : SV_Target
             {
                 const int AnimationSpeedMultiplier = 2000;
                 half4 color = IN.color;
                 float2 pos = IN.texcoord * 2.0 - 1.0;
                 half angle = atan2(pos.y, pos.x) / PI * 0.5 + 0.5;
-                half animationSpeed = IN.flareParam.w / AnimationSpeedMultiplier;
-            	half noise = noise2d(float2(angle * IN.flareParam.y, _Time.z * animationSpeed), 0);
+                half animationSpeed = IN.flareParam.w / AnimationSpeedMultiplier * 0.5;
+                half complexity = IN.flareParam.y * 0.5;
+            	half noise = 0.5 * (1 + snoise(float2(angle * complexity, _Time.z * animationSpeed)));
                 half sharpness = UnpackNormalizedLog(IN.flareParam.z, 0, -7, 2);
                 color *= pow(noise, sharpness) - pow(length(pos), 0.5);
                 color *= IN.flareParam.x;

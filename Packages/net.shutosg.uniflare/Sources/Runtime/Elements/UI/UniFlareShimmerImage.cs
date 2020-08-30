@@ -7,7 +7,7 @@ namespace shutosg.UniFlare.Elements.UI
     {
         private const int AnimationSpeedMultiplier = 2000;
         [Header("Shimmer Param")]
-        [SerializeField] private int _complexity = 100;
+        [Range(0, 500)] [SerializeField] private int _complexity = 100;
         [Range(0.01f, 4.0f)] [SerializeField] private float _sharpness = 1f;
         [Range(0, 3f)] [SerializeField] private float _animationSpeed = 0.25f;
 

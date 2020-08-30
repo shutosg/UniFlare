@@ -88,7 +88,7 @@ Shader "UniFlare/UI/Shimmer"
                 half animationSpeed = IN.flareParam.w / AnimationSpeedMultiplier * 0.5;
                 half complexity = IN.flareParam.y * 0.5;
             	half noise = 0.5 * (1 + snoise(float2(angle * complexity, _Time.z * animationSpeed)));
-                half sharpness = UnpackNormalizedLog(IN.flareParam.z, 0, -7, 2);
+                half sharpness = UnpackNormalizedLog(IN.flareParam.z, 0, -7, 3);
                 color *= pow(noise, sharpness) - pow(length(pos), 0.5);
                 color *= IN.flareParam.x;
 

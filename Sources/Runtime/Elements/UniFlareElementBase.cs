@@ -9,7 +9,7 @@ namespace shutosg.UniFlare.Elements
     {
         protected const float Percentage = 100f;
         protected const int IntensityMagnification = 100;
-        [Header("for Self Update")]
+        [Header("for Self Update(use without UniFlareController)")]
         [SerializeField] private bool _selfUpdate = default;
         [Range(0, 100)] [SerializeField] private float _flickerAmount = default;
         [Range(0, 20)] [SerializeField] private float _flickerSpeed = default;

@@ -80,10 +80,11 @@ Shader "UniFlare/UI/Glow"
 
             fixed4 frag(v2f IN) : SV_Target
             {
+                const int SizeOffset = 5000;
                 half4 color = IN.color;
                 float dist = distance(IN.texcoord, float2(0.5, 0.5)) * 2.0;
                 dist += (sign(dist) * (1.0 - _Size));
-                half size = IN.flareParam.y / 100;
+                half size = (IN.flareParam.y - SizeOffset) / 100;
                 float distanceAlpha = 0.1 / pow(dist, size * 2.0) * IN.flareParam.x;
                 color *= distanceAlpha;
 

@@ -1,8 +1,8 @@
 {
   "name": "net.shutosg.uniflare",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "displayName": "UniFlare",
-  "description": "Flare effect for Unity.",
+  "description": "UniFlare is extendable flare effect library for Unity.",
   "keywords": [
     "Flare"
   ],

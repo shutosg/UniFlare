@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Packages/net.shutosg.uniflare/Samples/UniFlareSample/Scenes/SampleFlare.unity
+    guid: 83acf3fee33cc44bc8ab24056e7a048f
   m_configObjects: {}

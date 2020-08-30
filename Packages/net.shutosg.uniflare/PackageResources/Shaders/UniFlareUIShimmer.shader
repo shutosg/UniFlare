@@ -6,7 +6,6 @@ Shader "UniFlare/UI/Shimmer"
     {
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
-        _AnimationSpeed ("Animation Speed", FLoat) = 0
 
         [Header(Blending Factor)]
         [Enum(UnityEngine.Rendering.BlendMode)] _SrcFactor("Src Factor", Float) = 5 // SrcAlpha
@@ -76,7 +75,6 @@ Shader "UniFlare/UI/Shimmer"
             fixed4 _TextureSampleAdd;
             fixed _CutoffAlpha;
             float4 _ClipRect;
-            float _AnimationSpeed;
 
             #define PI 3.14159265358979
 
@@ -112,10 +110,12 @@ Shader "UniFlare/UI/Shimmer"
 
             fixed4 frag(v2f IN) : SV_Target
             {
+                const int AnimationSpeedMultiplier = 2000;
                 half4 color = IN.color;
                 float2 pos = IN.texcoord * 2.0 - 1.0;
                 half angle = atan2(pos.y, pos.x) / PI * 0.5 + 0.5;
-            	half noise = noise2d(float2(angle * IN.flareParam.y, _Time.z * _AnimationSpeed), 0);
+                half animationSpeed = IN.flareParam.w / AnimationSpeedMultiplier;
+            	half noise = noise2d(float2(angle * IN.flareParam.y, _Time.z * animationSpeed), 0);
                 half sharpness = UnpackNormalizedLog(IN.flareParam.z, 0, -7, 2);
                 color *= pow(noise, sharpness) - pow(length(pos), 0.5);
                 color *= IN.flareParam.x;
